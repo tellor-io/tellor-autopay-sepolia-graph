@@ -1,0 +1,36 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: sepolia
+    source:
+      address: "0x7E7b96d13D75bc7DaF270A491e2f1e571147d4DA"
+      abi: Contract
+      startBlock: 3283562
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - DataFeedFunded
+        - NewDataFeed
+        - OneTimeTipClaimed
+        - TipAdded
+        - TipClaimed
+        - DataFeed
+      abis:
+        - name: Contract
+          file: Contract/abis/Contract.json
+      eventHandlers:
+        - event: DataFeedFunded(indexed bytes32,indexed bytes32,indexed
+            uint256,address,(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleDataFeedFunded
+        - event: NewDataFeed(indexed bytes32,indexed bytes32,bytes,address)
+          handler: handleNewDataFeed
+        - event: TipAdded(indexed bytes32,indexed uint256,bytes,address)
+          handler: handleTipAdded
+        - event: TipClaimed(indexed bytes32,indexed bytes32,indexed uint256,address)
+          handler: handleTipClaimed
+      file: Contract/Contract.wasm
